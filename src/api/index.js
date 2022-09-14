@@ -3,7 +3,8 @@ import requset from '@/utils/request'
 
 export const fetchAllChannels = () => {
   return requset({
-    url: '/v1_0/channels'
+    url: '/v1_0/channels',
+    method: 'GET'
   })
 }
 /**
@@ -21,8 +22,26 @@ export const loginApi = ({ mobile, code }) => {
     }
   })
 }
+/**
+ * 获取所有频道
+ * @returns
+ */
 export const myChannelsApi = () => {
   return requset({
-    url: '/v1_0/channels'
+    url: '/v1_0/channels',
+    method: 'GET'
+  })
+}
+/**
+ * 获取文章列表
+ */
+export const articlesListAPI = ({ channelId, timestamp }) => {
+  return requset({
+    url: '/v1_0/articles',
+    method: 'GET',
+    params: {
+      channel_id: channelId,
+      timestamp
+    }
   })
 }
