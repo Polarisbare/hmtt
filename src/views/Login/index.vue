@@ -45,7 +45,7 @@
 <script>
 import { Toast } from 'vant'
 export default {
-  name: 'login-vue',
+  name: 'login-index',
   data () {
     return {
       form: {
