@@ -26,5 +26,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+   .main-container {
+    position: fixed;
+    top: 0;
+    bottom: 50px;
+    width: 100%;
+  }
 </style>

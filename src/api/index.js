@@ -21,3 +21,8 @@ export const loginApi = ({ mobile, code }) => {
     }
   })
 }
+export const myChannelsApi = () => {
+  return requset({
+    url: '/v1_0/channels'
+  })
+}
