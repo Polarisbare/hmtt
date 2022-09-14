@@ -4,7 +4,8 @@
     <article-item
       v-for="item in articleList"
       :key="item.art_id"
-      :item="item"></article-item>
+      :item="item"
+    ></article-item>
   </div>
 </template>
 
@@ -30,12 +31,12 @@ export default {
     async articlesListFn () {
       const { data } = await articlesListAPI({
         channelId: this.channelId, // 默认推荐频道
-        timestamp: +new Date()// 默认时间戳当前时间
+        timestamp: +new Date() // 默认时间戳当前时间
       })
       // console.log('res', data)
       this.articleList = data.results
       this.timestamp = data.pre_timestamp
-      console.log(222222, data)
+      // console.log(222222, data)
     }
   },
   mounted () {
@@ -43,3 +44,12 @@ export default {
   }
 }
 </script>
+<style scoped lang="less">
+.list-container {
+  position: fixed;
+  top: 42px;
+  bottom: 50px;
+  width: 100%;
+  overflow: scroll;
+}
+</style>

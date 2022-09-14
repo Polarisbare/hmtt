@@ -28,7 +28,7 @@ export default {
     async myChannels () {
       const { data } = await myChannelsApi()
       // console.log(res)
-      console.log(data)
+      // console.log(data)
       this.channelList = data.channels
     }
   },
