@@ -1,7 +1,7 @@
 import { loginApi } from '@/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getTokenFn, setTokenFn } from '@/utils/ls.js'
+import { getTokenFn, setTokenFn, removeTokenFn } from '@/utils/ls.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,6 +14,11 @@ export default new Vuex.Store({
       state.token = newToken
       // ls   本地存一份
       setTokenFn(newToken)
+    },
+    // 删除token
+    removeToken (state) {
+      state.token = ''
+      removeTokenFn()
     }
   },
   actions: {

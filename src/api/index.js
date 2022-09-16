@@ -88,3 +88,10 @@ export const articleunLikeApi = ({ target }) => {
     method: 'DELETE'
   })
 }
+// 用户基本资料   我的页面
+export const myUserApi = () => {
+  return request({
+    url: '/v1_0/user',
+    method: 'GET'
+  })
+}
