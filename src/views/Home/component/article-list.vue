@@ -1,21 +1,27 @@
 <template>
   <div class="list-container">
-    <!--  :immediate-check="false" 表示首次不用上拉加载功能 -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-      :immediate-check="false"
-    >
-    <!-- 文章列表 -->
-    <article-item
-      v-for="item in articleList"
-      :key="item.art_id"
-      :item="item"
-    ></article-item>
+    <van-pull-refresh
+    v-model="isLoading"
+    @refresh="onRefresh"
+     success-text="刷新成功">
+      <!--  :immediate-check="false" 表示首次不用上拉加载功能 -->
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        :immediate-check="false"
+      >
+      <!-- 文章列表 -->
+      <article-item
+        v-for="item in articleList"
+        :key="item.art_id"
+        :item="item"
+        @click.native="$router.push(`/detail?id=${item.art_id}`)"
+      ></article-item>
 
-    </van-list>
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -36,7 +42,8 @@ export default {
     return {
       articleList: [],
       loading: false, // 是否正在加载中
-      finished: false // 是否加载了所有的数据
+      finished: false, // 是否加载了所有的数据
+      isLoading: false
 
     }
   },
@@ -71,6 +78,13 @@ export default {
       if (!this.timestamp) {
         this.finished = true
       }
+    },
+    // 下拉刷新事件
+    async onRefresh () {
+      this.timestamp = +new Date()// 改成最新时间
+      await this.articlesListFn()// 更新最新数据
+      // console.log('6666')
+      this.isLoading = false// 关闭刷新状态
     }
   },
   mounted () {

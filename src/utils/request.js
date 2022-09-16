@@ -1,5 +1,6 @@
 // 封装axios 请求
 import axios from 'axios'
+import store from '@/store'
 
 const instance = axios.create({
   baseURL: 'http://geek.itheima.net',
@@ -9,6 +10,8 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(config => {
 // Do something before request is sent
+// 携带token
+  config.headers.Authorization = `Bearer ${store.state.token}`
   return config
 }, error => {
 // Do something with request error
