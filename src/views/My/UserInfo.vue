@@ -27,7 +27,12 @@
         </template>
       </van-cell>
       <van-cell title="名称" is-link v-model="profile.name" @click="editName" />
-      <van-cell title="生日" is-link v-model="profile.birthday" />
+      <van-cell
+        title="生日"
+        is-link
+        v-model="profile.birthday"
+        @click="editDate"
+      />
     </van-cell-group>
 
     <!-- 对话框 -->
@@ -45,19 +50,41 @@
         placeholder="请输入名称"
       />
     </van-dialog>
+
+    <!-- 日历弹出层 -->
+    <van-popup
+      v-model="showDateDialog"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
+     <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择年月日"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :show-toolbar="true"
+        @confirm="updateDate"
+        />
+    </van-popup>
   </div>
 </template>
 
 <script>
 // updateNameApi
 import { userProfileAPI, updatePhotoAPI, updateNameApi } from '@/api'
+import dayjs from 'dayjs'
 export default {
   name: 'user-edit',
   data () {
     return {
       profile: {}, // 用户基本资料
-      showNameDialog: false,
-      userName: ''
+      showNameDialog: false, // 名称修改弹出层
+      userName: '',
+      showDateDialog: false, // 日历修改弹出层
+      currentDate: new Date(), // 时间显示
+      minDate: new Date(1900, 1, 1),
+      maxDate: new Date(2025, 1, 1)
     }
   },
   methods: {
@@ -76,7 +103,7 @@ export default {
       //   console.log(res)
       this.profile.photo = res.data.photo // 更新最新头像
     },
-    // 回显数据
+    // 回显数据名称
     editName () {
       // 打开弹框
       this.showNameDialog = true
@@ -90,6 +117,21 @@ export default {
       await updateNameApi({
         name: this.profile.name
       })
+    },
+    // 回显日期数据
+    editDate () {
+      this.showDateDialog = true
+      // 回显时间显示
+      this.currentDate = new Date(this.profile.birthday)
+    },
+    // 修改时间
+    async updateDate () {
+      const formatTime = dayjs(this.currentDate).format('YYYY-MM-DD')
+      this.profile.birthday = formatTime
+      await updateNameApi({
+        birthday: formatTime
+      })
+      this.showDateDialog = false
     }
   },
   mounted () {
