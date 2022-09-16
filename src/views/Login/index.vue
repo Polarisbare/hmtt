@@ -64,7 +64,7 @@ export default {
       try {
         await this.$store.dispatch('fetchLogin', this.form)
         Toast.success('登陆成功')
-        const redirect = this.$router.redirect
+        const redirect = this.$route.query.redirect
         if (redirect) {
           this.$router.push(redirect)
         } else {

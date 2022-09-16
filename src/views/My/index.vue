@@ -34,7 +34,7 @@
 
     <!-- 操作面板 -->
     <van-cell-group class="action-card">
-      <van-cell icon="edit" title="编辑资料" is-link />
+      <van-cell icon="edit" title="编辑资料" is-link @click="$router.push('/user-info')" />
       <van-cell icon="warning-o" title="退出登录" is-link @click="loginOut"/>
     </van-cell-group>
   </div>
