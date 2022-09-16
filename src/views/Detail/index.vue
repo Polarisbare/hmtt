@@ -14,7 +14,7 @@
       <h1 class="art-title">{{articleDetailList.title}}</h1>
 
       <!-- 用户信息 -->
-      <van-cell center :title="articleDetailList.aut_name" :label="articleDetailList.pubdate">
+      <van-cell center :title="articleDetailList.aut_name" :label="_timeFn(articleDetailList.pubdate)">
         <template #icon>
           <img :src="articleDetailList.aut_photo" alt="" class="avatar" />
         </template>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { timeFn } from '@/utils/time'
 import { articleDetailAPI, articleFollowApi, articleunFollowApi, articleunLikeApi, articleLikeApi } from '@/api'
 export default {
   name: 'detail-index',
@@ -60,6 +61,7 @@ export default {
     }
   },
   methods: {
+    _timeFn: timeFn,
     async articleDetail () {
       const { data } = await articleDetailAPI(this.$route.query.id)
       this.articleDetailList = data
