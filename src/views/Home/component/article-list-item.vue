@@ -42,7 +42,7 @@ export default {
   name: 'article-list-item',
   props: {
     item: {
-      type: Object,
+      type: [Object],
       default: () => {
         return {}
       }

@@ -124,3 +124,24 @@ export const updateNameApi = ({ name, birthday }) => {
     }
   })
 }
+// 搜索联想
+export const getFilterListApi = ({ q }) => {
+  return request({
+    url: '/v1_0/suggestion',
+    method: 'GET',
+    params: {
+      q
+    }
+  })
+}
+
+// 搜索 - 结果列表
+export const searchResultListAPI = ({ q, page = 1 }) => {
+  return request({
+    url: '/v1_0/search',
+    params: {
+      q,
+      page
+    }
+  })
+}
