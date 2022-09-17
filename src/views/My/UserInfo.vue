@@ -45,7 +45,7 @@
     >
       <!-- 输入框 -->
       <van-field
-        v-model.trim="userName"
+        v-model="userName"
         input-align="center"
         placeholder="请输入名称"
       />
@@ -115,7 +115,7 @@ export default {
       //   this.userName   你输入的信息
       this.profile.name = this.userName
       await updateNameApi({
-        name: this.profile.name
+        name: this.userName
       })
     },
     // 回显日期数据
