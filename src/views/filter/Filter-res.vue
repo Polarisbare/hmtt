@@ -8,13 +8,24 @@
       @click-left="$router.go(-1)"
       fixed
     />
-    <!-- 列表 -->
-    <article-list-item
-      v-for="article in list"
-      :key="article.art_id"
-      :item="article"
+    <!-- 上拉加载 -->
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      loading-text='正在为主人疯狂加载'
+      :immediate-check='false'
     >
-    </article-list-item>
+      <!-- 列表 -->
+      <article-list-item
+        v-for="article in list"
+        :key="article.art_id"
+        :item="article"
+      >
+      </article-list-item>
+    </van-list>
+
     <!-- <article-list-item v-for="item in list" :key="item.art_id" :item="item"/> -->
   </div>
 </template>
@@ -28,7 +39,9 @@ export default {
   data () {
     return {
       page: 1, // 当前页数
-      list: [] // 数据列表
+      list: [], // 数据列表
+      loading: false,
+      finished: false
     }
   },
   components: {
@@ -43,6 +56,25 @@ export default {
       // console.log(data)
       this.list = data.results
       // console.log(this.list)
+    },
+    // 上拉加载
+    async onLoad () {
+      // console.log(6666)
+      this.page++
+      const { data } = await searchResultListAPI({
+        q: this.$route.query.q,
+        page: this.page
+      })
+      console.log(data)
+      // 合并数组 重新渲染
+      this.list = [...this.list, ...data.results]
+      this.loading = false
+      // console.log(res)
+      // 判断后台是否还有数据没有的话就提醒用户
+      // 根据总条数除页容量得出页数
+      if (this.page >= data.total_count / 10) {
+        this.finished = true
+      }
     }
   },
   mounted () {
