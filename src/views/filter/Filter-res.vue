@@ -22,6 +22,7 @@
         v-for="article in list"
         :key="article.art_id"
         :item="article"
+        @click.native="$router.push(`/detail?id=${article.art_id}`)"
       >
       </article-list-item>
     </van-list>
@@ -65,7 +66,7 @@ export default {
         q: this.$route.query.q,
         page: this.page
       })
-      console.log(data)
+      // console.log(data)
       // 合并数组 重新渲染
       this.list = [...this.list, ...data.results]
       this.loading = false
@@ -76,6 +77,8 @@ export default {
         this.finished = true
       }
     }
+    // 点击文章每一条跳转到详情页
+
   },
   mounted () {
     // console.log(this.$route.query.q)

@@ -19,6 +19,12 @@
         <span v-html="formatStr(item)"></span>
       </div>
     </div>
+    <!-- 搜索历史区 -->
+    <div class="history" v-show="filterList.length === 0">
+      <van-tag plain type="primary" v-for="item in historyList" :key="item" >
+        {{item}}
+      </van-tag>
+    </div>
 
   </div>
 </template>
@@ -32,7 +38,8 @@ export default {
   data () {
     return {
       filterList: [],
-      keyword: '' // 用户输入的文字
+      keyword: '', // 用户输入的文字
+      historyList: JSON.parse(localStorage.getItem('history')) || []
     }
   },
   methods: {
@@ -51,6 +58,8 @@ export default {
       if (this.keyword !== '') {
         const { data } = await getFilterListApi({ q: this.keyword })
         this.filterList = data.options
+      } else {
+        this.filterList = ''
       }
     }, 400),
     // 取消按钮
@@ -66,6 +75,8 @@ export default {
     },
     // 跳转
     FilterResFn (keyword) {
+      this.historyList.push(keyword)
+      window.localStorage.setItem('history', JSON.stringify(this.historyList))
       this.$router.push({
         path: '/filter-res',
         query: {
