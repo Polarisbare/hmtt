@@ -13,15 +13,17 @@
     </form>
 
     <!-- 搜索联想区域 -->
+    <!-- 后面需要做点击跳转携带当前点击的联想关键词 为了保证关键词是原始的字符串不带span标签
+    所以采取的是在模板区域对数据显示控制 -->
     <div class="sugg-list">
       <div class="sugg-item" v-for="item in filterList" :key="item" @click="FilterResFn(item)" >
-        <!-- 富文本 -->
+        <!-- 富文本 识别 v-html-->
         <span v-html="formatStr(item)"></span>
       </div>
     </div>
     <!-- 搜索历史区 -->
     <div class="history" v-show="filterList.length === 0">
-      <van-tag plain type="primary" v-for="item in historyList" :key="item" >
+      <van-tag class="taghistory" plain type="primary" v-for="item in historyList" :key="item" @click="FilterResFn(item)">
         {{item}}
       </van-tag>
     </div>
@@ -33,6 +35,7 @@
 import _ from 'lodash'
 import { Toast } from 'vant'
 import { getFilterListApi } from '@/api'
+// import { set } from 'vue'
 export default {
   name: 'filter-index',
   data () {
@@ -66,7 +69,7 @@ export default {
     onCancel () {
       Toast('您已取消搜索')
     },
-    // 颜色
+    // 颜色     富文本识别   str是原始的祖父穿 return 处理之后的字符串
     formatStr (str) {
       const reg = new RegExp(this.keyword, 'ig')// 第一个参数是值  第二个是规则
       return str.replace(reg, (key) => {
@@ -75,8 +78,10 @@ export default {
     },
     // 跳转
     FilterResFn (keyword) {
+      // 数组去重
       this.historyList.push(keyword)
-      window.localStorage.setItem('history', JSON.stringify(this.historyList))
+      const unique = [...new Set(this.historyList)]
+      localStorage.setItem('history', JSON.stringify(unique))
       this.$router.push({
         path: '/filter-res',
         query: {
@@ -102,5 +107,8 @@ export default {
     text-overflow: ellipsis;
     color: rgba(0, 0, 0, 0.65);
   }
+}
+.taghistory{
+  margin-right: 5px;
 }
 </style>

@@ -91,4 +91,10 @@ export default {
 .search-result-container {
   padding-top: 46px;
 }
+.scroll-box{
+  position: fixed;
+  top: 46px;
+  bottom: 0;
+  width: 100%;
+}
 </style>
