@@ -59,7 +59,7 @@ export default {
         const { data } = await getFilterListApi({ q: this.keyword })
         this.filterList = data.options
       } else {
-        this.filterList = ''
+        this.filterList = []
       }
     }, 400),
     // 取消按钮
@@ -68,7 +68,7 @@ export default {
     },
     // 颜色
     formatStr (str) {
-      const reg = new RegExp(this.keyword, 'ig')
+      const reg = new RegExp(this.keyword, 'ig')// 第一个参数是值  第二个是规则
       return str.replace(reg, (key) => {
         return `<span style="color:red;">${key}</span>`
       })
