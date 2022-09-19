@@ -66,14 +66,17 @@ export default {
         q: this.$route.query.q,
         page: this.page
       })
-      // console.log(data)
+      console.log(data)
       // 合并数组 重新渲染
       this.list = [...this.list, ...data.results]
       this.loading = false
       // console.log(res)
       // 判断后台是否还有数据没有的话就提醒用户
       // 根据总条数除页容量得出页数
-      if (this.page >= data.total_count / 10) {
+      // if (this.page >= data.total_count / 10) {
+      //   this.finished = true
+      // }
+      if (data.results.length === 0) {
         this.finished = true
       }
     }

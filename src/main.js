@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import '@/utils/vants'// 按需引入
+import vantPlugin from '@/utils/vants.js'// 按需引入
 // import Vant from 'vant'// 引入组件vant
 import 'vant/lib/index.css'// 引入组件样式vant
 import 'amfe-flexible'// 引入移动端适配插件 rem方案
@@ -14,6 +14,7 @@ import 'amfe-flexible'// 引入移动端适配插件 rem方案
 // getChannels()
 // Vue.use(Vant)// 使用组件vant
 Vue.config.productionTip = false
+Vue.use(vantPlugin)
 
 new Vue({
   router,

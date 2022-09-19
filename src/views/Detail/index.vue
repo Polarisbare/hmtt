@@ -91,6 +91,9 @@ export default {
   },
   mounted () {
     this.articleDetail()
+  },
+  activated () {
+    this.articleDetail()
   }
 }
 </script>

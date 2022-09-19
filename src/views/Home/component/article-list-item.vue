@@ -10,15 +10,34 @@
     <!-- 标题 -->
     <span>{{ item.title }}</span>
     <!-- 单图 -->
-    <img class="thumb" :src="item.cover.images[0]" />
+    <!-- <img class="thumb" :src="item.cover.images[0]" />正常开发  没有添加懒加载 -->
+    <!-- 单图懒加载模式优化lazy-load-->
+     <van-image
+    class="thumb"
+    width="113"
+    height="70"
+    :src="item.cover.images[0]"
+    lazy-load
+    />
   </div>
   <!-- 三张图片 -->
   <div class="thumb-box" v-if="item.cover.type > 1">
-    <img
+    <!-- 没有懒加载 -->
+    <!-- <img
       class="thumb"
       v-for="(imgUrl, index) in item.cover.images"
       :key="index"
       :src="imgUrl"
+    /> -->
+    <!-- 添加懒加载 lazy-load-->
+    <van-image
+    v-for="(imgUrl, index) in item.cover.images"
+    :key="index"
+    class="thumb"
+    width="113"
+    height="70"
+    :src="imgUrl"
+    lazy-load
     />
   </div>
 </template>
